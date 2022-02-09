@@ -4,7 +4,7 @@ var server = http.createServer(function(request,response){
 
     if(request.url === "/"){
         response.writeHead(200,{'Content-Type': 'text/plain'})
-        response.end('Hello from home page')
+        response.end('Hello Jukka from home page')
     }
     
     if(request.url === "/own"){
