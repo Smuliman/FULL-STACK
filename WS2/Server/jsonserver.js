@@ -10,6 +10,7 @@ var server = http.createServer(function(request,response){
         response.writeHead(200,{'Content-Type': 'text/json'})
         response.write(JSON.stringify(data));
         
+        
         response.end();
         }
     });
