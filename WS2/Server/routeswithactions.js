@@ -26,13 +26,14 @@ var server = http.createServer(function(request,response){
             return response.end();
         });
     } else if(request.url === "/json") {
-        fs.readFile('sampledata.json', function(err, data){
-            response.writeHead(200,{'Content-Type': 'text/plain'});
+        //fs.readFile('sampledata.json', function(err, data){
+            var data = require('./sampledata.json');
+            response.writeHead(200,{'Content-Type': 'application/json'});
             //var data = require('./sampladata.json');
             var output = JSON.stringify(data);
             response.write(output);
             return response.end();
-        });
+        
     }
     
 
