@@ -15,7 +15,7 @@ var request = http.request(options, function (res) {
   res.on("end", function () {
     json = JSON.parse(data);
 
-    console.log(json);
+    //console.log(json);
   });
 });
 request.on("error", function (e) {
@@ -24,6 +24,11 @@ request.on("error", function (e) {
 request.end();
 
 var server = http.createServer(function (request, response) {
+  if (request.url === "/") {
+    response.writeHead(200, { "Content-Type": "text/html" });
+
+    response.end("<p>Nothing to see hear</p>");
+  }
   if (request.url === "/movies") {
     response.writeHead(200, { "Content-Type": "text/html" });
 
