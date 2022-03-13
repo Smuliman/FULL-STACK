@@ -2,8 +2,22 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/", function (req, res) {
+app.use(express.static("./public"));
+
+app.get("/Sam", function (req, res) {
   res.send("Hello Sam");
+});
+
+app.get("/guestbook", function (req, res) {
+  res.send("Hello guest");
+});
+
+app.get("/newmessage", function (req, res) {
+  res.send("Hello new message");
+});
+
+app.get("/ajaxmessage", function (req, res) {
+  res.send("Hello ajax");
 });
 
 app.get("*", function (req, res) {
