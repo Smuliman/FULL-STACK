@@ -1,9 +1,11 @@
 const express = require("express");
+const fs = require("fs");
 const app = express();
 const port = 3000;
-var table_data;
+var bodyParser = require("body-parser");
 
 app.use(express.static("./public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/Sam", function (req, res) {
   res.send("Hello Sam");
@@ -37,8 +39,29 @@ app.get("/guestbook", function (req, res) {
   res.send(results);
 });
 
-app.get("/newmessage", function (req, res) {
-  res.send("Hello new message");
+app.post("/newmessage", function (req, res) {
+  //res.sendFile(__dirname + "//form.html");
+
+  //siirretään bodyparserilla napatut lomake inputit muuttujiin
+  var new_name = req.body.username;
+  var new_country = req.body.country;
+  var new_message = req.body.message;
+
+  //haetaan data.jsonin tiedot muuttujaan data
+  var data = require("./data.json");
+
+  //esitellään muuttuja, johon tallenetaan lomakeinputiin syötetyt tiedot
+  let newData = {
+    id: data.length + 1,
+    username: new_name,
+    country: new_country,
+    message: new_message,
+  };
+
+  //lisätään uudet tiedot json tiedostoon
+  data.push(newData);
+
+  res.send("Message sent!");
 });
 
 app.get("/ajaxmessage", function (req, res) {
