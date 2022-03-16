@@ -97,7 +97,7 @@ app.post("/ajaxmessage", function (req, res) {
   var username = req.body.username;
   var country = req.body.country;
   var message = req.body.message;
-  console.log("backend: " + message);
+  //console.log("backend: " + message);
   res.send(
     "username: " +
       username +
