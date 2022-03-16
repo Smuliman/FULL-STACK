@@ -1,20 +1,45 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/Sam", function (req, res) {
-  res.send("Hello Sam");
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "//index.html");
 });
 
 app.get("/guestbook", function (req, res) {
-  //res.sendFile(__dirname + "//guestbook.html");
   var json = require("./data.json");
-  var results = `<table border="1">
+  var results = `
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Message AJAX Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="./">Super Villain fanpage</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="./guestbook">Guestbook</a></li>
+        <li><a href="./form.html">New Message</a></li>
+        <li><a href="./ajaxform.html">Ajax Message</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <table class="table">
   <thead>
       <tr>
         <th>Username</th>
@@ -34,7 +59,11 @@ app.get("/guestbook", function (req, res) {
       "<td>" +
       json[i].message +
       "</td>" +
-      "</tr>";
+      `</tr>
+      
+      </body>
+</html>
+      `;
   }
   res.send(results);
 });
@@ -64,8 +93,21 @@ app.post("/newmessage", function (req, res) {
   res.send("Message sent!");
 });
 
-app.get("/ajaxmessage", function (req, res) {
-  res.send("Hello ajax");
+app.post("/ajaxmessage", function (req, res) {
+  var username = req.body.username;
+  var country = req.body.country;
+  var message = req.body.message;
+  console.log("backend: " + message);
+  res.send(
+    "username: " +
+      username +
+      "<br> country: " +
+      country +
+      "<br> message: " +
+      message +
+      "<br>" +
+      "<br>"
+  );
 });
 
 app.get("*", function (req, res) {
